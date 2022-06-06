@@ -1,0 +1,56 @@
+.main-navbar {
+  position: fixed;
+  width: 100vw;
+  height: 10%;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 100;
+}
+
+.main-navbar__links {
+  width: 45vw;
+  display: flex;
+  color: white;
+  text-decoration: none;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.main-navbar__links > a {
+  color: white;
+  text-decoration: none;
+  /* transform: scale(1); */
+  transition: transform 0.5s;
+}
+
+.main-navbar__links > a:hover {
+  transform: scale(1.5);
+  transition: 1s;
+}
+
+.main-navbar__links > a.active {
+  color: var(--weak-yellow);
+}
+
+.main-navbar__links div {
+  margin-top: 2%;
+  transition: transform 0.5s;
+}
+
+.main-navbar__links div:hover {
+  transform: scale(1.5);
+  transition: 1s;
+}
+
+.menu-active {
+  /* background: radial-gradient( */
+  /* 50% 50% at 50% 50%, */
+  /* var(--gradient-color-one) 0%, */ /* var(--gradient-color-two) 100% */
+  /* ); */
+  background-color: var(--strong-gray);
+}
+
+.cart-sacle {
+  transform: scale(1.5);
+  transition: 1s;
+}

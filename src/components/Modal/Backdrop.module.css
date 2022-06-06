@@ -1,0 +1,10 @@
+.backdrop {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffcb7477;
+  backdrop-filter: blur(3px);
+  z-index: 100;
+}

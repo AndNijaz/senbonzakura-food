@@ -1,0 +1,48 @@
+.menu-item {
+  height: 16.5%;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  border-bottom: 1px solid var(--paragraph-gray);
+  margin-bottom: 3%;
+}
+
+.menu-item h2 {
+  font-size: 1.3vw;
+  color: black;
+}
+
+.menu-item div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu-item p {
+  margin: 2% 0%;
+  font-size: 0.9vw;
+  width: 90%;
+}
+
+.menu-item__functions {
+  margin: 2% 0%;
+  width: 11vw;
+}
+
+.menu-item__functions div {
+  border: 1px solid black;
+  height: 5vh;
+  width: 2.5vw;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-item__functions button {
+  width: 2.5vw;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2vw;
+}

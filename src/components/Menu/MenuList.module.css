@@ -1,0 +1,10 @@
+.menu-list {
+  /* border: 1px solid black; */
+  height: 70%;
+}
+
+.menu-list__buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}

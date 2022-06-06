@@ -1,0 +1,20 @@
+.menu-content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.menu-content__label {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--strong-yellow);
+  text-align: center;
+  padding: 3%;
+  width: 20vw;
+  border-radius: 5px;
+  color: white;
+}

@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Routes, Route, Navigate, useParams } from "react-router-dom";
+
+import Layout from "./components/Layout/Layout";
+import Home from "./components/Home/Home";
+import Menu from "./components/Menu/Menu";
+import MenuContent from "./components/Menu/MenuContent";
+import { useSelector } from "react-redux";
 
 function App() {
+  // const [modalActive, setModalActive] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      {/* {ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))} */}
+      {/* {ReactDOM.createPortal(<CartModal />, document.getElementById("modal"))} */}
+      <Routes>
+        <Route path="/" element={<Navigate to="/home" />}></Route>
+        <Route path="/home" element={<Home />}></Route>
+        <Route path="/menu" element={<Menu />}>
+          <Route
+            path="/menu/:foodId"
+            element={<MenuContent></MenuContent>}
+          ></Route>
+        </Route>
+        <Route path="/orders"></Route>
+        <Route path="/login"></Route>
+      </Routes>
+    </Layout>
   );
 }
 

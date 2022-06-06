@@ -1,0 +1,39 @@
+.home-main {
+  display: flex;
+  height: 100%;
+}
+
+.home__section {
+  width: 50vw;
+  height: 100%;
+}
+
+.home__left-side {
+  justify-content: space-between;
+  padding: 0 5%;
+  /* padding-bottom: 19%; */
+  display: flex;
+  flex-direction: column;
+}
+
+.home__right-side {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    50% 50% at 50% 50%,
+    var(--gradient-color-one) 0%,
+    var(--gradient-color-two) 100%
+  );
+}
+
+h1 {
+  color: var(--weak-yellow);
+}
+
+.main-picture__holder {
+  margin-top: 15%;
+  width: 70%;
+  height: 85%;
+  overflow: hidden;
+}
