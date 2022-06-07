@@ -12,7 +12,7 @@ import { updateCartIconScaleAction } from "../../store/ui-slice";
 
 const MainNavbar = () => {
   const dispatch = useDispatch();
-  const modalOpen = useSelector((state) => state.ui.modalOpen);
+  const cartModalOpen = useSelector((state) => state.ui.cartModalOpen);
   const cartIconScale = useSelector((state) => state.ui.cartIconScale);
 
   const location = useLocation();
@@ -23,17 +23,17 @@ const MainNavbar = () => {
   };
 
   const onCartClickHandler = () => {
-    dispatch(uiSliceActions.updateModalOpen());
+    dispatch(uiSliceActions.updateCartModalOpen());
   };
 
   return (
     <Fragment>
-      {modalOpen &&
+      {cartModalOpen &&
         ReactDOM.createPortal(
           <Backdrop />,
           document.getElementById("backdrop")
         )}
-      {modalOpen &&
+      {cartModalOpen &&
         ReactDOM.createPortal(<CartModal />, document.getElementById("modal"))}
       <nav
         className={` ${

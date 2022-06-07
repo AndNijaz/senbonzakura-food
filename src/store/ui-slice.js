@@ -1,18 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  modalOpen: false,
+  cartModalOpen: false,
   cartIconScale: false,
   sort: "asc",
   page: 0,
+  comingSoonModalOpen: false,
+  status: "loading",
 };
 
 const uiSlice = createSlice({
   name: "UI",
   initialState,
   reducers: {
-    updateModalOpen(state) {
-      state.modalOpen = !state.modalOpen;
+    updateCartModalOpen(state) {
+      state.cartModalOpen = !state.cartModalOpen;
     },
     updateCartIconScale(state) {
       state.cartIconScale = !state.cartIconScale;
@@ -20,6 +22,16 @@ const uiSlice = createSlice({
     updatePage(state, action) {
       if (action.payload === "forward") state.page++;
       if (action.payload === "backward") state.page--;
+    },
+    updateComingSoonModal(state) {
+      state.comingSoonModalOpen = !state.comingSoonModalOpen;
+    },
+    closeModal(state) {
+      state.cartModalOpen = false;
+      state.comingSoonModalOpen = false;
+    },
+    setStatus(state, action) {
+      state.status = action.payload;
     },
   },
 });

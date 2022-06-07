@@ -32,16 +32,17 @@ const formatArray = (array) => {
 const MenuList = (props) => {
   const page = props.page;
   const dispatch = useDispatch();
-  const DUMMY_FOOD = props.foodList;
+  const foodArray = props.foodList;
+
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
+
   const [foodList, setFoodList] = useState([]);
 
-  console.log(DUMMY_FOOD);
   useEffect(() => {
-    setFoodList(formatArray(DUMMY_FOOD));
-  }, []);
+    setFoodList(formatArray(foodArray));
+  }, [foodArray]);
 
   const queryPrams = new URLSearchParams(location.search);
   const sort = queryPrams.get("sort");
@@ -53,13 +54,29 @@ const MenuList = (props) => {
     dispatch(uiSliceActions.updatePage("backward"));
   };
   const onSortPageHandler = () => {
-    navigate(`/menu/${params.foodId}/?sort=${sort === "asc" ? "desc" : "asc"}`);
-    sort === "asc"
-      ? (DUMMY_FOOD = DUMMY_FOOD.sort((a, b) => a.foodPrice - b.foodPrice))
-      : (DUMMY_FOOD = DUMMY_FOOD.sort((a, b) => b.foodPrice - a.foodPrice));
-  };
+    console.log(params.foodId);
+    console.log(
+      `/menu/${params.foodId ? params.foodId + "/" : ""}?sort=${
+        sort === "asc" ? "desc" : "asc"
+      }`
+    );
+    navigate(
+      `/menu/${params.foodId ? params.foodId + "/" : ""}?sort=${
+        sort === "asc" ? "desc" : "asc"
+      }`
+    );
+    let foodListPart = foodList[page];
+    let foodListSort = foodList;
 
-  console.log(page);
+    const sortFoodList = (sort) => {
+      foodListPart = foodListPart.sort((a, b) =>
+        sort === "asc" ? a.foodPrice - b.foodPrice : b.foodPrice - a.foodPrice
+      );
+      foodListSort[page] = foodListPart;
+      setFoodList(foodListSort);
+    };
+    sort === "asc" ? sortFoodList("asc") : sortFoodList("desc");
+  };
 
   return (
     <Fragment>
@@ -76,7 +93,11 @@ const MenuList = (props) => {
             Page {page}
           </Button>
         )}
-        <Button type="button" onClick={onSortPageHandler}>
+        <Button
+          type="button"
+          onClick={onSortPageHandler}
+          className={classes["sort-button"]}
+        >
           {sort === "asc" ? `Descending` : `Ascending`}
         </Button>
         <Button type="button" onClick={onNextPageHandler}>

@@ -1,7 +1,13 @@
 import classes from "./Menu.module.css";
 import MenuList from "./MenuList";
 import { Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import foodSliceActions from "../../store/food-slice";
+import { useParams } from "react-router-dom";
+import MenuInitialContent from "./MenuInitialContent";
+import LoadingSpinner from "../UI/LoadingSpinner";
+import uiSliceActions from "../../store/ui-slice";
 
 let DUMMY_FOOD = [
   {
@@ -97,11 +103,43 @@ let DUMMY_FOOD = [
 ];
 
 const Menu = () => {
-  const page = useSelector((state) => state.ui.page);
-  // const navigate = useNavigate();
+  const status = useSelector((state) => state.ui.status);
+  const params = useParams();
+  let menuContent = true;
 
-  // const queryPrams = new URLSearchParams(location.search);
-  // const sort = queryPrams.get("sort");
+  Object.keys(params)[0] ? (menuContent = false) : (menuContent = true);
+
+  const [foodList, setFoodList] = useState([]);
+  const dispatch = useDispatch();
+
+  const page = useSelector((state) => state.ui.page);
+
+  useEffect(() => {
+    const getFoodList = async () => {
+      const response = await fetch(
+        "https://senbonzakura-food-default-rtdb.firebaseio.com/food.json"
+      );
+      if (!response.ok) throw new Error("Something went wrong!");
+      const data = await response.json();
+      const foodList = data[Object.keys(data)[0]];
+      dispatch(foodSliceActions.updateFoodList(foodList));
+      setFoodList(foodList);
+      dispatch(uiSliceActions.setStatus("successful"));
+    };
+
+    getFoodList().catch((err) => {
+      console.log("piva");
+      dispatch(uiSliceActions.setStatus("error"));
+      console.log(err);
+    });
+  }, []);
+
+  let menuContentComponent = "";
+
+  if (status === "loading") menuContentComponent = <LoadingSpinner />;
+  if (status === "successful" && menuContent)
+    menuContentComponent = <MenuInitialContent />;
+  if (status === "error") menuContentComponent = <h1>Error!</h1>;
 
   return (
     <main className={classes["menu-main"]}>
@@ -112,11 +150,24 @@ const Menu = () => {
           <h1>MENU</h1>
           <h1>{page + 1}</h1>
         </div>
-        <MenuList foodList={DUMMY_FOOD} page={page} />
+        {status === "loading" ? "Loading..." : ""}
+        {status === "successful" ? (
+          <MenuList foodList={foodList} page={page} />
+        ) : (
+          ""
+        )}
+        {status === "error" ? "Error..." : ""}
+        {/* <MenuList foodList={foodList} page={page} /> */}
       </section>
       <section
         className={`${classes["menu__section"]} ${classes["menu__right-side"]}`}
       >
+        {/* {status === "loading" ? (
+          <LoadingSpinner />
+        ) : (
+          menuContent && <MenuInitialContent />
+        )} */}
+        {menuContentComponent}
         <Outlet />
       </section>
     </main>

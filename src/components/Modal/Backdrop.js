@@ -8,10 +8,10 @@ const Backdrop = () => {
   const dispatch = useDispatch();
 
   const onBackdropClickHandler = () => {
-    dispatch(uiSliceActions.updateModalOpen());
+    dispatch(uiSliceActions.closeModal());
   };
   return (
-    <div className={classes["backdrop"]} onClick={onBackdropClickHandler}></div>
+    <div className={classes["backdrop"]} onClick={onBackdropClickHandler} />
   );
 };
 

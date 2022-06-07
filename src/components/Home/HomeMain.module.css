@@ -53,3 +53,9 @@ select {
   background-color: var(--strong-yellow);
   border-radius: 10px;
 }
+
+select[disabled],
+select:disabled {
+  color: black;
+  opacity: 10;
+}

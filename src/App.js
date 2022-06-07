@@ -6,6 +6,7 @@ import Home from "./components/Home/Home";
 import Menu from "./components/Menu/Menu";
 import MenuContent from "./components/Menu/MenuContent";
 import { useSelector } from "react-redux";
+import MenuBottom from "./components/Menu/MenuBottom";
 
 function App() {
   // const [modalActive, setModalActive] = useState(false);
