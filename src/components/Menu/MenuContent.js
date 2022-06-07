@@ -4,6 +4,7 @@ import MenuBottom from "./MenuBottom";
 
 import { useParams } from "react-router-dom";
 import { useDebugValue } from "react";
+import { useSelector } from "react-redux";
 
 const DUMMY_FOOD = [
   {
@@ -58,11 +59,15 @@ const DUMMY_FOOD = [
   },
 ];
 
-const MenuContent = () => {
+const MenuContent = (props) => {
+  const foodList = useSelector((state) => state.foodList.food);
   const params = useParams();
   const urlFoodId = params.foodId;
 
-  const foodObject = DUMMY_FOOD.find((foodObj) => foodObj.id === urlFoodId);
+  let foodObject;
+  foodObject = foodList.find((foodObj) => foodObj.id === urlFoodId);
+
+  if (!foodObject) return;
 
   return (
     <div className={classes["menu-content"]}>

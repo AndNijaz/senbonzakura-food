@@ -29,3 +29,11 @@
   left: 50%;
   transform: translate(-50%);
 }
+
+.menu-initial-content button {
+  width: 15vw;
+  height: 7vh;
+  font-size: 2vw;
+
+  margin-top: 5%;
+}

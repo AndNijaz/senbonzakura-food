@@ -7,6 +7,7 @@ const initialState = {
   page: 0,
   comingSoonModalOpen: false,
   status: "loading",
+  reload: false,
 };
 
 const uiSlice = createSlice({
@@ -32,6 +33,9 @@ const uiSlice = createSlice({
     },
     setStatus(state, action) {
       state.status = action.payload;
+    },
+    reInicialize(state) {
+      state.reload = !state.reload;
     },
   },
 });

@@ -54,12 +54,6 @@ const MenuList = (props) => {
     dispatch(uiSliceActions.updatePage("backward"));
   };
   const onSortPageHandler = () => {
-    console.log(params.foodId);
-    console.log(
-      `/menu/${params.foodId ? params.foodId + "/" : ""}?sort=${
-        sort === "asc" ? "desc" : "asc"
-      }`
-    );
     navigate(
       `/menu/${params.foodId ? params.foodId + "/" : ""}?sort=${
         sort === "asc" ? "desc" : "asc"

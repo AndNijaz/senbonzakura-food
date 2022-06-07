@@ -46,3 +46,8 @@
   border-top-color: #09d;
   border-left-color: #09d;
 }
+
+.spinner.side-spinner {
+  left: 12%;
+  top: 50%;
+}

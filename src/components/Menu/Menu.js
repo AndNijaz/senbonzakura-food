@@ -103,8 +103,13 @@ let DUMMY_FOOD = [
 ];
 
 const Menu = () => {
+  const reInicialize = useSelector((state) => state.ui.reload);
+  console.log("AA");
+
   const status = useSelector((state) => state.ui.status);
+
   const params = useParams();
+
   let menuContent = true;
 
   Object.keys(params)[0] ? (menuContent = false) : (menuContent = true);
@@ -128,18 +133,17 @@ const Menu = () => {
     };
 
     getFoodList().catch((err) => {
-      console.log("piva");
       dispatch(uiSliceActions.setStatus("error"));
-      console.log(err);
     });
-  }, []);
+  }, [reInicialize]);
 
   let menuContentComponent = "";
 
   if (status === "loading") menuContentComponent = <LoadingSpinner />;
   if (status === "successful" && menuContent)
-    menuContentComponent = <MenuInitialContent />;
-  if (status === "error") menuContentComponent = <h1>Error!</h1>;
+    menuContentComponent = <MenuInitialContent status="successful" />;
+  if (status === "error")
+    menuContentComponent = <MenuInitialContent status="error" />;
 
   return (
     <main className={classes["menu-main"]}>
@@ -150,23 +154,17 @@ const Menu = () => {
           <h1>MENU</h1>
           <h1>{page + 1}</h1>
         </div>
-        {status === "loading" ? "Loading..." : ""}
+        {status === "loading" ? <LoadingSpinner className="sideSpinner" /> : ""}
         {status === "successful" ? (
           <MenuList foodList={foodList} page={page} />
         ) : (
           ""
         )}
         {status === "error" ? "Error..." : ""}
-        {/* <MenuList foodList={foodList} page={page} /> */}
       </section>
       <section
         className={`${classes["menu__section"]} ${classes["menu__right-side"]}`}
       >
-        {/* {status === "loading" ? (
-          <LoadingSpinner />
-        ) : (
-          menuContent && <MenuInitialContent />
-        )} */}
         {menuContentComponent}
         <Outlet />
       </section>
