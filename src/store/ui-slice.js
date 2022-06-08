@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { act } from "react-dom/test-utils";
 
 const initialState = {
   cartModalOpen: false,
@@ -23,6 +24,7 @@ const uiSlice = createSlice({
     updatePage(state, action) {
       if (action.payload === "forward") state.page++;
       if (action.payload === "backward") state.page--;
+      if (action.payload > 0) state.page = action.payload;
     },
     updateComingSoonModal(state) {
       state.comingSoonModalOpen = !state.comingSoonModalOpen;

@@ -103,35 +103,50 @@ let DUMMY_FOOD = [
 ];
 
 const Menu = () => {
+  //This one is used for reloading page when it comes to error
   const reInicialize = useSelector((state) => state.ui.reload);
-  console.log("AA");
+  //
 
+  //This one determines if the data is fetched or not
   const status = useSelector((state) => state.ui.status);
 
+  //
   const params = useParams();
 
+  //If this is true it will display default page / if not, it will display page of some id
   let menuContent = true;
-
+  //Logic for above description
   Object.keys(params)[0] ? (menuContent = false) : (menuContent = true);
 
+  //FoodList when its fetched shoud be set
   const [foodList, setFoodList] = useState([]);
+  //
   const dispatch = useDispatch();
 
+  //Takes a page
   const page = useSelector((state) => state.ui.page);
 
   useEffect(() => {
+    //Getting food from the server
     const getFoodList = async () => {
       const response = await fetch(
         "https://senbonzakura-food-default-rtdb.firebaseio.com/food.json"
       );
+      //Guard clause
       if (!response.ok) throw new Error("Something went wrong!");
+      //Data
       const data = await response.json();
+      //Final foood list
       const foodList = data[Object.keys(data)[0]];
+      //Updating food list in redux store
       dispatch(foodSliceActions.updateFoodList(foodList));
+      //Updating foodlist state
       setFoodList(foodList);
+      //updating status
       dispatch(uiSliceActions.setStatus("successful"));
     };
 
+    //Calling function for getting foodlist
     getFoodList().catch((err) => {
       dispatch(uiSliceActions.setStatus("error"));
     });

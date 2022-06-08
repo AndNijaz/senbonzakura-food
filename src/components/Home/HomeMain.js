@@ -3,6 +3,7 @@ import Backdrop from "../Modal/Backdrop";
 import { useDispatch, useSelector } from "react-redux";
 import uiSliceActions from "../../store/ui-slice";
 import ComingSoonModal from "../Modal/ComingSoonModal";
+import ReactDOM from "react-dom";
 
 const HomeMain = () => {
   const comingSoonModalOpen = useSelector(
@@ -17,8 +18,16 @@ const HomeMain = () => {
 
   return (
     <div className={classes["left-side-main"]}>
-      {comingSoonModalOpen && <Backdrop />}
-      {comingSoonModalOpen && <ComingSoonModal />}
+      {comingSoonModalOpen &&
+        ReactDOM.createPortal(
+          <Backdrop />,
+          document.getElementById("backdrop")
+        )}
+      {comingSoonModalOpen &&
+        ReactDOM.createPortal(
+          <ComingSoonModal />,
+          document.getElementById("modal")
+        )}
       <h2>
         A <span>Good Food</span> Choices are <br />
         <span>good investments.</span>

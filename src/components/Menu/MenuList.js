@@ -26,32 +26,86 @@ const formatArray = (array) => {
     helpArr = [];
   }
 
+  // arr.unshift([]);
+  // console.log(arr);
   return arr;
 };
 
 const MenuList = (props) => {
-  const page = props.page;
+  //Current page
+  // const page = props.page;
+  const page = useSelector((state) => state.ui.page);
+  //
+  const [currentPage, setCurrentPage] = useState(null);
   const dispatch = useDispatch();
+  //food list from food state
   const foodArray = props.foodList;
 
+  //
   const navigate = useNavigate();
+  //
   const location = useLocation();
+  //
   const params = useParams();
 
   const [foodList, setFoodList] = useState([]);
+
+  const queryPrams = new URLSearchParams(location.search);
+
+  useEffect(() => {
+    let currentPage = queryPrams.get("page");
+    if (currentPage) {
+      currentPage = [...currentPage];
+      currentPage = currentPage
+        .filter((pageChar) => pageChar >= 0)
+        .join()
+        .replace(",", "");
+    }
+    console.log(currentPage);
+    setCurrentPage(currentPage);
+    dispatch(uiSliceActions.updatePage(+currentPage - 1));
+  }, [currentPage]);
+
+  const sort = queryPrams.get("sort");
+
+  const displayPage = currentPage ? currentPage - 1 : page;
+
+  console.log("Current page " + currentPage);
+  console.log("Display page " + displayPage);
+  // dispatch(uiSliceActions.updatePage(displayPage));
+  // console.log(displayPage);
+  // console.log(foodList[displayPage]);
 
   useEffect(() => {
     setFoodList(formatArray(foodArray));
   }, [foodArray]);
 
-  const queryPrams = new URLSearchParams(location.search);
-  const sort = queryPrams.get("sort");
-
   const onNextPageHandler = () => {
+    let navigateString = "";
+    if (sort) {
+      navigateString = `/menu/${
+        params.foodId ? params.foodId + "/" : ""
+      }?page=${page + 2}/?sort=${sort === "asc" ? "desc" : "asc"}`;
+    } else
+      navigateString = navigateString = `/menu/${
+        params.foodId ? params.foodId + "/" : ""
+      }?page=${page + 2}`;
+
     dispatch(uiSliceActions.updatePage("forward"));
+    navigate(navigateString);
   };
   const onPreviousPageHandler = () => {
+    let navigateString = "";
+    if (sort) {
+      navigateString = `/menu/${
+        params.foodId ? params.foodId + "/" : ""
+      }?page=${page}/?sort=${sort === "asc" ? "desc" : "asc"}`;
+    } else
+      navigateString = navigateString = `/menu/${
+        params.foodId ? params.foodId + "/" : ""
+      }?page=${page}`;
     dispatch(uiSliceActions.updatePage("backward"));
+    navigate(navigateString);
   };
   const onSortPageHandler = () => {
     navigate(
@@ -72,19 +126,29 @@ const MenuList = (props) => {
     sort === "asc" ? sortFoodList("asc") : sortFoodList("desc");
   };
 
+  // foodList[displayPage - 1 < 0 ? 0 : displayPage - 1]
+  // console.log(displayPage);
+  // console.log(displayPage - 1 < 0 ? 0 : displayPage);
+  // console.log("experiment " + displayPage - 1 < 0 ? 0 : displayPage - 1);
+  console.log(foodList[displayPage - 1 < 0 ? 0 : displayPage]);
   return (
     <Fragment>
       <div className={classes["menu-list"]}>
-        {foodList[page]
-          ? foodList[page].map((foodObj) => (
+        {foodList[displayPage - 1 < 0 ? 0 : displayPage]
+          ? foodList[displayPage - 1 < 0 ? 0 : displayPage].map((foodObj) => (
               <MenuItem key={foodObj.id} foodObj={foodObj} />
             ))
           : ""}
+        {/* {foodList[page]
+          ? foodList[page].map((foodObj) => (
+              <MenuItem key={foodObj.id} foodObj={foodObj} />
+            ))
+          : ""} */}
       </div>
       <div className={classes["menu-list__buttons"]}>
-        {page >= 1 && (
+        {displayPage >= 1 && (
           <Button type="button" onClick={onPreviousPageHandler}>
-            Page {page}
+            Page {displayPage}
           </Button>
         )}
         <Button
@@ -95,7 +159,7 @@ const MenuList = (props) => {
           {sort === "asc" ? `Descending` : `Ascending`}
         </Button>
         <Button type="button" onClick={onNextPageHandler}>
-          Page {page + 2}
+          Page {displayPage + 2}
         </Button>
       </div>
     </Fragment>

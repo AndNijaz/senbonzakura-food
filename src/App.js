@@ -24,8 +24,8 @@ function App() {
             element={<MenuContent></MenuContent>}
           ></Route>
         </Route>
-        <Route path="/orders"></Route>
-        <Route path="/login"></Route>
+        <Route path="/orders" element={<Navigate to="/home" />}></Route>
+        <Route path="/login" element={<Navigate to="/home" />}></Route>
       </Routes>
     </Layout>
   );

@@ -10,6 +10,7 @@ const MenuInitialContent = (props) => {
   const dispatch = useDispatch();
 
   const onTryAgainHandler = () => {
+    dispatch(uiSliceActions.setStatus("loading"));
     dispatch(uiSliceActions.reInicialize());
     // console.log("aa");
   };

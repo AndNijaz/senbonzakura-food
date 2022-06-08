@@ -2,16 +2,21 @@ import classes from "./MainNavbar.module.css";
 import { NavLink, useLocation } from "react-router-dom";
 import Magnifier from "../../Assets/Magnifier.svg";
 import SmallCart from "../../Assets/SmallCart.svg";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactDOM from "react-dom";
 import Backdrop from "../Modal/Backdrop";
 import CartModal from "../Modal/CartModal";
 import uiSliceActions from "../../store/ui-slice";
-import { updateCartIconScaleAction } from "../../store/ui-slice";
+import ComingSoonModal from "../Modal/ComingSoonModal";
 
 const MainNavbar = () => {
+  const totalAmount = useSelector((state) => state.cart.totalAmount);
+  console.log(totalAmount);
   const dispatch = useDispatch();
+  const comingSoonModalOpen = useSelector(
+    (state) => state.ui.comingSoonModalOpen
+  );
   const cartModalOpen = useSelector((state) => state.ui.cartModalOpen);
   const cartIconScale = useSelector((state) => state.ui.cartIconScale);
 
@@ -26,6 +31,14 @@ const MainNavbar = () => {
     dispatch(uiSliceActions.updateCartModalOpen());
   };
 
+  const onComingSoonHadnler = () => {
+    dispatch(uiSliceActions.updateComingSoonModal());
+  };
+
+  const scaleClass = () => {
+    return cartIconScale ? classes["cart-sacle"] : "";
+  };
+
   return (
     <Fragment>
       {cartModalOpen &&
@@ -35,6 +48,16 @@ const MainNavbar = () => {
         )}
       {cartModalOpen &&
         ReactDOM.createPortal(<CartModal />, document.getElementById("modal"))}
+      {comingSoonModalOpen &&
+        ReactDOM.createPortal(
+          <Backdrop />,
+          document.getElementById("backdrop")
+        )}
+      {comingSoonModalOpen &&
+        ReactDOM.createPortal(
+          <ComingSoonModal />,
+          document.getElementById("modal")
+        )}
       <nav
         className={` ${
           pathname.slice(0, 5) === "/menu" ? classes["menu-active"] : ""
@@ -50,21 +73,30 @@ const MainNavbar = () => {
           <NavLink
             className={(linkData) => isLinkActive(linkData)}
             to="/orders"
+            onClick={onComingSoonHadnler}
           >
             ORDERS
           </NavLink>
-          <NavLink className={(linkData) => isLinkActive(linkData)} to="/login">
+          <NavLink
+            className={(linkData) => isLinkActive(linkData)}
+            to="/login"
+            onClick={onComingSoonHadnler}
+          >
             LOGIN
           </NavLink>
-          <div>
+          <div onClick={onComingSoonHadnler}>
             <img src={Magnifier} alt="search icon" />
           </div>
-          <div
-            onClick={onCartClickHandler}
-            className={cartIconScale ? classes["cart-sacle"] : ""}
-          >
+          <div onClick={onCartClickHandler} className={scaleClass()}>
             <img src={SmallCart} alt="cart icon" />
           </div>
+          {totalAmount === 0 ? (
+            ""
+          ) : (
+            <div className={`${classes["cart-amount"]} ${scaleClass()}`}>
+              {totalAmount}
+            </div>
+          )}
         </div>
       </nav>
     </Fragment>

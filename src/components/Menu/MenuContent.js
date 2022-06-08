@@ -71,7 +71,7 @@ const MenuContent = (props) => {
 
   return (
     <div className={classes["menu-content"]}>
-      <MenuTop />
+      <MenuTop food={foodObject} />
       <div className={classes["menu-content__label"]}>
         {foodObject.foodName}
       </div>
