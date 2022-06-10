@@ -7,7 +7,6 @@ const foodSlice = createSlice({
   initialState,
   reducers: {
     updateFoodList(state, action) {
-      //   console.log(action.payload);
       state.food = action.payload;
     },
   },

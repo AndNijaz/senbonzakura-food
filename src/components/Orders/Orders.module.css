@@ -1,0 +1,49 @@
+.orders-container {
+  margin: 3% 5%;
+  margin-top: 5%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.orders-container > nav h1 {
+  color: var(--strong-yellow);
+  padding-bottom: 1%;
+  /* border-bottom: 1px solid var(--weak-yellow); */
+}
+
+.orders {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.orders > nav {
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  height: 10%;
+  align-items: center;
+  border-bottom: 1px solid var(--strong-gray);
+}
+
+.orders > nav > div:first-child,
+.orders > nav > div:last-child {
+  display: flex;
+}
+
+.orders > nav > div:first-child {
+  width: 90%;
+}
+
+.orders > nav div:first-child div:last-child {
+  margin-left: 2.5%;
+}
+
+.orders > nav > div:last-child {
+  width: 10%;
+  justify-content: flex-end;
+}
+
+.orders > nav div:last-child div:last-child {
+  margin-left: 25%;
+}

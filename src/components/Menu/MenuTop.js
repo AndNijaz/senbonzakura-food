@@ -16,18 +16,20 @@ import kageyoshi from "../../Assets/kageyoshi.svg";
 const DUMMY_IMAGES = {
   senbonpasta: senbonPasta,
   senbonpizza: senbonPizza,
-  zakuraspaghetti: zakuraSpaghetti,
+  zakurasphagetti: zakuraSpaghetti,
   narutoramen: narutoRamen,
   zangetsumeat: zangetsuMeat,
   dango: dango,
   rjujinflame: rjujinFlame,
   getsugatensho: getsugatensho,
   benihime: benihime,
-  kageyoshi: kageyoshi,
+  kegeyosi: kageyoshi,
 };
 
 const MenuTop = (props) => {
   const food = props.food.foodName.replaceAll(" ", "").toLowerCase();
+  console.log(food);
+
   const img = Object.keys(DUMMY_IMAGES).find((img) => img === food);
 
   return (

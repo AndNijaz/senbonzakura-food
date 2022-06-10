@@ -126,11 +126,15 @@ const MenuList = (props) => {
     sort === "asc" ? sortFoodList("asc") : sortFoodList("desc");
   };
 
+  const maxPage = Math.ceil(foodArray.length) / 5;
+
+  // console.log("lenght" + foodArray.length);
+
   // foodList[displayPage - 1 < 0 ? 0 : displayPage - 1]
-  // console.log(displayPage);
+  console.log("dp " + displayPage);
+  console.log("mp " + maxPage);
   // console.log(displayPage - 1 < 0 ? 0 : displayPage);
   // console.log("experiment " + displayPage - 1 < 0 ? 0 : displayPage - 1);
-  console.log(foodList[displayPage - 1 < 0 ? 0 : displayPage]);
   return (
     <Fragment>
       <div className={classes["menu-list"]}>
@@ -158,7 +162,11 @@ const MenuList = (props) => {
         >
           {sort === "asc" ? `Descending` : `Ascending`}
         </Button>
-        <Button type="button" onClick={onNextPageHandler}>
+        <Button
+          type="button"
+          onClick={onNextPageHandler}
+          disabled={displayPage === maxPage - 1 ? true : false}
+        >
           Page {displayPage + 2}
         </Button>
       </div>

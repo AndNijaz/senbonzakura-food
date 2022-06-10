@@ -47,6 +47,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding-bottom: 2%;
 }
 
 .body__right-side div:first-child {
@@ -69,6 +70,13 @@
   margin: 2.5% 0;
 }
 
+.body__right-side button {
+  margin-top: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+}
 /* .body__right-side div:last-child { */
 /* border: 1px solid black; */
 /* } */

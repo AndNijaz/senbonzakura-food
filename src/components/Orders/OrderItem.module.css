@@ -1,0 +1,29 @@
+.order__item {
+  display: flex;
+  justify-content: space-between;
+  height: 10%;
+  align-items: center;
+  border-bottom: 1px solid var(--paragraph-gray);
+}
+
+.order__item div:first-child,
+.order__item div:last-child {
+  display: flex;
+}
+
+.order__item > div:first-child {
+  width: 90%;
+}
+
+.order__item div:first-child div:last-child {
+  margin-left: 2.5%;
+}
+.order__item > div:last-child {
+  justify-content: space-between;
+  width: 10%;
+  /* width: 90%; */
+}
+
+.order__item div:last-child div:first-child {
+  margin-right: 2.5%;
+}

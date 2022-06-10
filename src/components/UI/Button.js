@@ -4,7 +4,12 @@ const Button = (props) => {
   const classNames = `${props.className} ${classes["button"]}`;
 
   return (
-    <button className={classNames} type={props.type} onClick={props.onClick}>
+    <button
+      className={classNames}
+      type={props.type}
+      onClick={props.onClick}
+      disabled={props.disabled}
+    >
       {props.children}
     </button>
   );

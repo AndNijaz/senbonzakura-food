@@ -22,7 +22,6 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action) {
-      //   console.log(action.payload.price);
       const cart = state.cart;
       const foodObjectIndex = cart.findIndex(
         (obj) => obj.id === action.payload.id
@@ -67,6 +66,11 @@ const cartSlice = createSlice({
           return;
         }
       }
+    },
+    cartOrdered(state) {
+      state.cart = [];
+      state.totalPrice = 0;
+      state.totalAmount = 0;
     },
   },
 });

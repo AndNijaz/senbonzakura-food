@@ -12,7 +12,6 @@ import ComingSoonModal from "../Modal/ComingSoonModal";
 
 const MainNavbar = () => {
   const totalAmount = useSelector((state) => state.cart.totalAmount);
-  console.log(totalAmount);
   const dispatch = useDispatch();
   const comingSoonModalOpen = useSelector(
     (state) => state.ui.comingSoonModalOpen
@@ -60,7 +59,7 @@ const MainNavbar = () => {
         )}
       <nav
         className={` ${
-          pathname.slice(0, 5) === "/menu" ? classes["menu-active"] : ""
+          pathname.slice(0, 5) !== "/home" ? classes["menu-active"] : ""
         } ${classes["main-navbar"]}`}
       >
         <div className={classes["main-navbar__links"]}>
@@ -73,7 +72,6 @@ const MainNavbar = () => {
           <NavLink
             className={(linkData) => isLinkActive(linkData)}
             to="/orders"
-            onClick={onComingSoonHadnler}
           >
             ORDERS
           </NavLink>

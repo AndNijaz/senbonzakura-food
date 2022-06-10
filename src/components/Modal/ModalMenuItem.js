@@ -1,26 +1,22 @@
-// import { NavLink } from "react-router-dom";
 import classes from "./ModalMenuItem.module.css";
 import Button from "../UI/Button";
 import { useDispatch } from "react-redux";
-import cartSliceActions from "../../store/cart-slice";
+import useAddToCart from "../../Hooks/use-add-to-cart";
+import useRemoveFromCart from "../../Hooks/use-remove-from-cart";
 
 const ModalMenuItem = (props) => {
-  const dispatch = useDispatch();
+  const addToCart = useAddToCart();
+  const removeFromCart = useRemoveFromCart();
 
-  const {
-    foodName,
-    foodDescription,
-    foodPrice,
-    id: foodID,
-    foodAmount,
-  } = props.foodObj;
+  const foodObject = props.foodObj;
+  const { foodName, foodDescription, foodPrice, foodAmount } = foodObject;
 
   const onAddHandler = () => {
-    dispatch(cartSliceActions.addToCart(props.foodObj));
+    addToCart(foodObject);
   };
 
   const onRemoveHandler = () => {
-    dispatch(cartSliceActions.removeFromCart(props.foodObj));
+    removeFromCart(foodObject);
   };
 
   return (

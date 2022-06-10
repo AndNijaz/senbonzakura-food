@@ -6,22 +6,14 @@
 .menu-list__buttons {
   width: 100%;
   display: flex;
-  /* justify-content: space-between; */
   justify-content: flex-end;
 }
 
-/* .menu-list_buttons button:not(:first-child):not(:last-child) { */
-/* color: black; */
-/* } */
-
-/* .menu-list__buttons button { */
-/* color: blacK; */
-/* margin-right: 10%; */
-/* } */
-
 .menu-list__buttons button:first-child,
 .sort-button {
-  /* justify-self: flex-end; */
   margin-right: 10%;
-  /* color: black; */
+}
+
+.menu-list__buttons button:disabled {
+  background-color: var(--paragraph-gray);
 }

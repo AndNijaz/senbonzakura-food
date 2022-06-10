@@ -6,15 +6,11 @@ import Home from "./components/Home/Home";
 import Menu from "./components/Menu/Menu";
 import MenuContent from "./components/Menu/MenuContent";
 import { useSelector } from "react-redux";
-import MenuBottom from "./components/Menu/MenuBottom";
+import Orders from "./components/Orders/Orders";
 
 function App() {
-  // const [modalActive, setModalActive] = useState(false);
-
   return (
     <Layout>
-      {/* {ReactDOM.createPortal(<Backdrop />, document.getElementById("backdrop"))} */}
-      {/* {ReactDOM.createPortal(<CartModal />, document.getElementById("modal"))} */}
       <Routes>
         <Route path="/" element={<Navigate to="/home" />}></Route>
         <Route path="/home" element={<Home />}></Route>
@@ -24,7 +20,7 @@ function App() {
             element={<MenuContent></MenuContent>}
           ></Route>
         </Route>
-        <Route path="/orders" element={<Navigate to="/home" />}></Route>
+        <Route path="/orders" element={<Orders />}></Route>
         <Route path="/login" element={<Navigate to="/home" />}></Route>
       </Routes>
     </Layout>
