@@ -6,16 +6,6 @@ const initialState = {
   totalAmount: 0,
 };
 
-/**
- * payload
- * {
- *  id:,
- * foodName:,
- * foodDescription,
- *  foodPrice:,
- *
- * }
- */
 
 const cartSlice = createSlice({
   name: "CartSlice",

@@ -1,26 +1,29 @@
 import { useDispatch } from "react-redux";
 import cartSliceActions from "../store/cart-slice";
+import uiSliceActions from "../store/ui-slice";
 
 const useOrder = () => {
   const dispatch = useDispatch();
 
-  //   console.log(orderItem);
-
   const order = (orderItem) => {
+    //Cancel side effect if button order is clicked but there is no item in cart
     if (orderItem.totalAmount === 0) return;
+
     let orders = JSON.parse(localStorage.getItem("orders"));
-    // const kara = localStorage.getItem("orders");
-    // console.log(kara);
-    // const dela = JSON.parse(kara);
-    // console.log(dela);
 
     if (!orders) orders = [];
 
     orders.push(orderItem);
-    // console.log(orders);
 
     localStorage.setItem("orders", JSON.stringify(orders));
     dispatch(cartSliceActions.cartOrdered());
+
+    dispatch(
+      uiSliceActions.updateMessageModal({
+        type: "happy",
+        message: "Successfully ordered.",
+      })
+    );
   };
   return order;
 };

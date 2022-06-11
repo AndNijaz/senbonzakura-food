@@ -8,7 +8,8 @@ const OrderItem = (props) => {
   return (
     <div className={classes["order__item"]}>
       <div>
-        <div>{order.orderID}</div>
+        {/*For right now I put random number just for design purposes. It could be done by manipulating states and localStorage.*/}
+        <div>{Math.floor(Math.random() * 101)}</div>
         <div>{orderedFood}</div>
       </div>
       <div>

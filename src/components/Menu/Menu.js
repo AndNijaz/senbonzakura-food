@@ -9,108 +9,13 @@ import MenuInitialContent from "./MenuInitialContent";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import uiSliceActions from "../../store/ui-slice";
 
-let DUMMY_FOOD = [
-  {
-    id: "f1",
-    foodName: "SENBON PIZZA",
-    foodDescription:
-      "Lorem ipsum dolor sit ament, consectetur adipiscing elit. Quisque eu euismod odio.",
-    foodPrice: 20,
-    foodAmount: 1,
-    initialPrice: 20,
-  },
-  {
-    id: "f2",
-    foodName: "SENBON PASTA",
-    foodDescription:
-      "Lorem ipsum dolor sit ament, consectetur adipiscing elit. Quisque eu euismod odio.",
-    foodPrice: 10,
-    foodAmount: 1,
-    initialPrice: 10,
-  },
-  {
-    id: "f3",
-    foodName: "ZAKURA SPHAGETTI",
-    foodDescription:
-      "Lorem ipsum dolor sit ament, consectetur adipiscing elit. Quisque eu euismod odio.",
-    foodPrice: 20,
-    foodAmount: 1,
-    initialPrice: 20,
-  },
-  {
-    id: "f4",
-    foodName: "ZANGETSU MEAT",
-    foodDescription:
-      "Lorem ipsum dolor sit ament, consectetur adipiscing elit. Quisque eu euismod odio.",
-    foodPrice: 50,
-    foodAmount: 1,
-    initialPrice: 50,
-  },
-  {
-    id: "f5",
-    foodName: "NARUTO RAMEN",
-    foodDescription:
-      "Lorem ipsum dolor sit ament, consectetur adipiscing elit. Quisque eu euismod odio.",
-    foodPrice: 25,
-    foodAmount: 1,
-    initialPrice: 25,
-  },
-  {
-    id: "f6",
-    foodName: "RJUJIN FLAME",
-    foodDescription:
-      "Lorem ipsum dolor sit ament, consectetur adipiscing elit. Quisque eu euismod odio.",
-    foodPrice: 90,
-    foodAmount: 1,
-    initialPrice: 90,
-  },
-  {
-    id: "f7",
-    foodName: "KEGEYOSI",
-    foodDescription:
-      "Lorem ipsum dolor sit ament, consectetur adipiscing elit. Quisque eu euismod odio.",
-    foodPrice: 150,
-    foodAmount: 1,
-    initialPrice: 150,
-  },
-  {
-    id: "f8",
-    foodName: "GETSUGATENSHO",
-    foodDescription:
-      "Lorem ipsum dolor sit ament, consectetur adipiscing elit. Quisque eu euismod odio.",
-    foodPrice: 130,
-    foodAmount: 1,
-    initialPrice: 130,
-  },
-  {
-    id: "f9",
-    foodName: "BENIHIME",
-    foodDescription:
-      "Lorem ipsum dolor sit ament, consectetur adipiscing elit. Quisque eu euismod odio.",
-    foodPrice: 140,
-    foodAmount: 1,
-    initialPrice: 140,
-  },
-  {
-    id: "f10",
-    foodName: "DANGO",
-    foodDescription:
-      "Lorem ipsum dolor sit ament, consectetur adipiscing elit. Quisque eu euismod odio.",
-    foodPrice: 25,
-    foodAmount: 1,
-    initialPrice: 25,
-  },
-];
-
 const Menu = () => {
-  //This one is used for reloading page when it comes to error
+  //This one is used for reloading page if it comes to error (When try again is clicked);
   const reInicialize = useSelector((state) => state.ui.reload);
-  //
 
-  //This one determines if the data is fetched or not
+  //This one determines if the data is fetched or not (it is already determined it only takes that value);
   const status = useSelector((state) => state.ui.status);
 
-  //
   const params = useParams();
 
   //If this is true it will display default page / if not, it will display page of some id
@@ -120,7 +25,7 @@ const Menu = () => {
 
   //FoodList when its fetched shoud be set
   const [foodList, setFoodList] = useState([]);
-  //
+
   const dispatch = useDispatch();
 
   //Takes a page
@@ -142,15 +47,15 @@ const Menu = () => {
       dispatch(foodSliceActions.updateFoodList(foodList));
       //Updating foodlist state
       setFoodList(foodList);
-      //updating status
+      //Updating status
       dispatch(uiSliceActions.setStatus("successful"));
     };
 
     //Calling function for getting foodlist
-    getFoodList().catch((err) => {
+    getFoodList().catch(() => {
       dispatch(uiSliceActions.setStatus("error"));
     });
-  }, [reInicialize]);
+  }, [reInicialize, dispatch]);
 
   let menuContentComponent = "";
 

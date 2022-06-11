@@ -1,7 +1,4 @@
 import classes from "./MenuTop.module.css";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-// import ZakuraSphag from "../../Assets/ZakuraSphag.png";
 import senbonPasta from "../../Assets/senbonPasta.svg";
 import senbonPizza from "../../Assets/senbonPizza.svg";
 import zakuraSpaghetti from "../../Assets/zakuraSpaghetti.svg";
@@ -13,6 +10,7 @@ import getsugatensho from "../../Assets/getsugatensho.svg";
 import benihime from "../../Assets/benihime.svg";
 import kageyoshi from "../../Assets/kageyoshi.svg";
 
+//To avoid waste of time, I put this images in one array and logic bellow will deetermine which picture shoud be shown. This could also be done with api, but there is no need for that right now
 const DUMMY_IMAGES = {
   senbonpasta: senbonPasta,
   senbonpizza: senbonPizza,
@@ -27,14 +25,15 @@ const DUMMY_IMAGES = {
 };
 
 const MenuTop = (props) => {
+  //This will format foodName property in a way that is the same as DUMMY_IMAGES keys
   const food = props.food.foodName.replaceAll(" ", "").toLowerCase();
-  console.log(food);
-
+  //This will look for required picture
   const img = Object.keys(DUMMY_IMAGES).find((img) => img === food);
 
   return (
     <div className={classes["menu-content__top"]}>
-      <img src={DUMMY_IMAGES[img]} alt="food picture" />
+      <img src={DUMMY_IMAGES[img]} alt="food" />
+      {/*This div below is an overlay*/}
       <div></div>
     </div>
   );

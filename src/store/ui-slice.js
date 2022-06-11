@@ -8,6 +8,9 @@ const initialState = {
   comingSoonModalOpen: false,
   status: "loading",
   reload: false,
+  messageModal: false,
+  messageType: "",
+  messageMessage: "",
 };
 
 const uiSlice = createSlice({
@@ -31,12 +34,18 @@ const uiSlice = createSlice({
     closeModal(state) {
       state.cartModalOpen = false;
       state.comingSoonModalOpen = false;
+      state.messageModal = false;
     },
     setStatus(state, action) {
       state.status = action.payload;
     },
     reInicialize(state) {
       state.reload = !state.reload;
+    },
+    updateMessageModal(state, action) {
+      state.messageModal = !state.messageModal;
+      state.messageType = action.payload.type;
+      state.messageMessage = action.payload.message;
     },
   },
 });

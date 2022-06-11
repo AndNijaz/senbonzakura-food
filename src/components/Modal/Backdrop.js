@@ -1,18 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import classes from "./Backdrop.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import uiSliceActions from "../../store/ui-slice";
+import useCloseCart from "../../Hooks/use-close-cart";
 
 const Backdrop = () => {
-  const dispatch = useDispatch();
+  const closeCart = useCloseCart();
 
-  const onBackdropClickHandler = () => {
-    dispatch(uiSliceActions.closeModal());
-  };
-  return (
-    <div className={classes["backdrop"]} onClick={onBackdropClickHandler} />
-  );
+  return <div className={classes["backdrop"]} onClick={closeCart} />;
 };
 
 export default Backdrop;

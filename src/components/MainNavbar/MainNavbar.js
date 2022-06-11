@@ -9,8 +9,11 @@ import Backdrop from "../Modal/Backdrop";
 import CartModal from "../Modal/CartModal";
 import uiSliceActions from "../../store/ui-slice";
 import ComingSoonModal from "../Modal/ComingSoonModal";
+import MessageModal from "../Modal/MessageModal";
 
 const MainNavbar = () => {
+  const modalMessage = useSelector((state) => state.ui.messageModal);
+
   const totalAmount = useSelector((state) => state.cart.totalAmount);
   const dispatch = useDispatch();
   const comingSoonModalOpen = useSelector(
@@ -57,6 +60,17 @@ const MainNavbar = () => {
           <ComingSoonModal />,
           document.getElementById("modal")
         )}
+      {modalMessage &&
+        ReactDOM.createPortal(
+          <Backdrop />,
+          document.getElementById("backdrop")
+        )}
+
+      {modalMessage &&
+        ReactDOM.createPortal(
+          <MessageModal />,
+          document.getElementById("modal")
+        )}
       <nav
         className={` ${
           pathname.slice(0, 5) !== "/home" ? classes["menu-active"] : ""
@@ -91,7 +105,10 @@ const MainNavbar = () => {
           {totalAmount === 0 ? (
             ""
           ) : (
-            <div className={`${classes["cart-amount"]} ${scaleClass()}`}>
+            <div
+              className={`${classes["cart-amount"]} ${scaleClass()}`}
+              onClick={onCartClickHandler}
+            >
               {totalAmount}
             </div>
           )}

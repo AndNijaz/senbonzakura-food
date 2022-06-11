@@ -1,5 +1,4 @@
 import classes from "./MenuBottom.module.css";
-import Button from "../UI/Button";
 import BottonElements from "./BottomElements";
 import BottomButtons from "./BottomButtons";
 

@@ -7,4 +7,5 @@
   background-color: #ffcb7477;
   backdrop-filter: blur(3px);
   z-index: 100;
+  cursor: pointer;
 }

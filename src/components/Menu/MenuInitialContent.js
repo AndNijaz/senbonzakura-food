@@ -12,7 +12,6 @@ const MenuInitialContent = (props) => {
   const onTryAgainHandler = () => {
     dispatch(uiSliceActions.setStatus("loading"));
     dispatch(uiSliceActions.reInicialize());
-    // console.log("aa");
   };
 
   let menuContent = "";
@@ -23,7 +22,7 @@ const MenuInitialContent = (props) => {
         <h1>Start by searching food you might like.</h1>
         <h2> Have fun</h2>
         <div>
-          <img src={smile} />
+          <img src={smile} alt="smile emoji"/>
         </div>
       </Fragment>
     );
@@ -34,7 +33,7 @@ const MenuInitialContent = (props) => {
         <h1>Something went wrong!</h1>
         <Button onClick={onTryAgainHandler}> Try again. </Button>
         <div>
-          <img src={sad} />
+          <img src={sad} alt="sad emoji"/>
         </div>
       </Fragment>
     );

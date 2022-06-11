@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import uiSliceActions from "../../store/ui-slice";
 
+//This logic will filter array. Array ites should be diveded in nested arrays. Each nested array should have 5 items.
 const formatArray = (array) => {
   const pages = Math.ceil(array.length / 5);
 
@@ -19,6 +20,7 @@ const formatArray = (array) => {
 
   for (let i = 0; i < pages; i++) {
     for (let j = c; j < c + 5; j++) {
+      if (!array[j]) break;
       helpArr.push(array[j]);
     }
     c += 5;
@@ -26,60 +28,63 @@ const formatArray = (array) => {
     helpArr = [];
   }
 
-  // arr.unshift([]);
-  // console.log(arr);
   return arr;
 };
 
 const MenuList = (props) => {
-  //Current page
-  // const page = props.page;
-  const page = useSelector((state) => state.ui.page);
-  //
   const [currentPage, setCurrentPage] = useState(null);
+  const [foodList, setFoodList] = useState([]);
+
+  const page = useSelector((state) => state.ui.page);
+
   const dispatch = useDispatch();
-  //food list from food state
+
   const foodArray = props.foodList;
 
-  //
   const navigate = useNavigate();
-  //
   const location = useLocation();
-  //
   const params = useParams();
-
-  const [foodList, setFoodList] = useState([]);
 
   const queryPrams = new URLSearchParams(location.search);
 
+  //Determination of current page
   useEffect(() => {
     let currentPage = queryPrams.get("page");
-    if (currentPage) {
-      currentPage = [...currentPage];
-      currentPage = currentPage
-        .filter((pageChar) => pageChar >= 0)
-        .join()
-        .replace(",", "");
-    }
-    console.log(currentPage);
+    if (!currentPage) return;
+
+    currentPage = [...currentPage];
+    currentPage = currentPage
+      .filter((pageChar) => pageChar >= 0)
+      .join()
+      .replace(",", "");
+
     setCurrentPage(currentPage);
     dispatch(uiSliceActions.updatePage(+currentPage - 1));
-  }, [currentPage]);
+  }, [currentPage, dispatch]);
+  // useEffect(() => {
+  //   let currentPage = queryPrams.get("page");
+  //   if (currentPage) {
+  //     currentPage = [...currentPage];
+  //     currentPage = currentPage
+  //       .filter((pageChar) => pageChar >= 0)
+  //       .join()
+  //       .replace(",", "");
+  //   }
+  //   console.log(currentPage);
+  //   setCurrentPage(currentPage);
+  //   dispatch(uiSliceActions.updatePage(+currentPage - 1));
+  // }, [currentPage]);
 
   const sort = queryPrams.get("sort");
 
-  const displayPage = currentPage ? currentPage - 1 : page;
-
-  console.log("Current page " + currentPage);
-  console.log("Display page " + displayPage);
-  // dispatch(uiSliceActions.updatePage(displayPage));
-  // console.log(displayPage);
-  // console.log(foodList[displayPage]);
+  //displayPageIndex is index of nested array which should be shown, for that reason we use -1. [[arr1], [arr2], [arr3]] --> If we want to take arr2, displayPageIndex would have to be 1;
+  const displayPageIndex = currentPage ? currentPage - 1 : page;
 
   useEffect(() => {
     setFoodList(formatArray(foodArray));
   }, [foodArray]);
 
+  //This is pagination logic, it has some bugs as it is said in "ReadMe"
   const onNextPageHandler = () => {
     let navigateString = "";
     if (sort) {
@@ -107,6 +112,7 @@ const MenuList = (props) => {
     dispatch(uiSliceActions.updatePage("backward"));
     navigate(navigateString);
   };
+  //This is sorting logic, it has same problems like pagination.
   const onSortPageHandler = () => {
     navigate(
       `/menu/${params.foodId ? params.foodId + "/" : ""}?sort=${
@@ -126,35 +132,26 @@ const MenuList = (props) => {
     sort === "asc" ? sortFoodList("asc") : sortFoodList("desc");
   };
 
+  //This is the number of pages. With this we determine when we have to disable pagination button.
   const maxPage = Math.ceil(foodArray.length) / 5;
 
-  // console.log("lenght" + foodArray.length);
+  const list =
+    foodList[displayPageIndex - 1 < 0 ? 0 : displayPageIndex] &&
+    foodList[displayPageIndex - 1 < 0 ? 0 : displayPageIndex].map((foodObj) => (
+      <MenuItem key={foodObj.id} foodObj={foodObj} />
+    ));
 
-  // foodList[displayPage - 1 < 0 ? 0 : displayPage - 1]
-  console.log("dp " + displayPage);
-  console.log("mp " + maxPage);
-  // console.log(displayPage - 1 < 0 ? 0 : displayPage);
-  // console.log("experiment " + displayPage - 1 < 0 ? 0 : displayPage - 1);
+  const buttonBack = displayPageIndex >= 1 && (
+    <Button type="button" onClick={onPreviousPageHandler}>
+      Page {displayPageIndex}
+    </Button>
+  );
+
   return (
     <Fragment>
-      <div className={classes["menu-list"]}>
-        {foodList[displayPage - 1 < 0 ? 0 : displayPage]
-          ? foodList[displayPage - 1 < 0 ? 0 : displayPage].map((foodObj) => (
-              <MenuItem key={foodObj.id} foodObj={foodObj} />
-            ))
-          : ""}
-        {/* {foodList[page]
-          ? foodList[page].map((foodObj) => (
-              <MenuItem key={foodObj.id} foodObj={foodObj} />
-            ))
-          : ""} */}
-      </div>
+      <div className={classes["menu-list"]}>{list}</div>
       <div className={classes["menu-list__buttons"]}>
-        {displayPage >= 1 && (
-          <Button type="button" onClick={onPreviousPageHandler}>
-            Page {displayPage}
-          </Button>
-        )}
+        {buttonBack}
         <Button
           type="button"
           onClick={onSortPageHandler}
@@ -165,9 +162,9 @@ const MenuList = (props) => {
         <Button
           type="button"
           onClick={onNextPageHandler}
-          disabled={displayPage === maxPage - 1 ? true : false}
+          disabled={displayPageIndex === maxPage - 1 ? true : false}
         >
-          Page {displayPage + 2}
+          Page {displayPageIndex + 2}
         </Button>
       </div>
     </Fragment>

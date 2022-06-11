@@ -4,11 +4,19 @@ import BigCart from "../../Assets/BigCart.svg";
 import { useSelector } from "react-redux";
 import Button from "../UI/Button";
 import useOrder from "../../Hooks/use-order";
+import ModalNavbar from "./ModalNavbar";
+
+import useCloseCart from "../../Hooks/use-close-cart";
+import useMessageModal from "../../Hooks/use-message-modal";
 
 const CartModal = () => {
+  // const messageModal = useSelector((state) => state.ui.messageModal);
+  const closeCart = useCloseCart();
+  // const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.cart);
   const order = useOrder();
   const { totalPrice, totalAmount } = useSelector((state) => state.cart);
+  const openMessageModal = useMessageModal();
 
   const onOrderHandler = () => {
     const orderObject = {
@@ -17,11 +25,19 @@ const CartModal = () => {
       totalPrice: totalPrice,
     };
     order(orderObject);
+    if (orderObject.totalAmount === 0) {
+      closeCart();
+      openMessageModal({ type: "sad", message: "You can't order empty cart!" });
+
+      return;
+    }
+    closeCart();
+    openMessageModal({ type: "happy", message: "Successfully ordered" });
   };
 
   return (
     <div className={classes["cart-modal"]}>
-      <div className={classes["cart-modal__navbar"]}></div>
+      <ModalNavbar />
       <div className={classes["cart-modal__body"]}>
         <div className={classes["body__left-side"]}>
           <h1>ORDERS</h1>

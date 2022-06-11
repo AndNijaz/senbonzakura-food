@@ -1,6 +1,5 @@
 import classes from "./ModalMenuItem.module.css";
 import Button from "../UI/Button";
-import { useDispatch } from "react-redux";
 import useAddToCart from "../../Hooks/use-add-to-cart";
 import useRemoveFromCart from "../../Hooks/use-remove-from-cart";
 
