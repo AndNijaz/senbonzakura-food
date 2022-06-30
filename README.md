@@ -5,6 +5,7 @@ This is my first React "big" project. This poject is web app for ordering food. 
 ## Technologies
 
 Technoloies used in this project are: ReactJS, ReactDOM, React Router, Redux, JavaScript, HTML, CSS. This project is live on Firebase and Netlify domain.
+https://senbonzakura-food.netlify.app/home
 
 ## Note
 
