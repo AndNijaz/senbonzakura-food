@@ -1,6 +1,6 @@
 # Senbonzakura food
 
-This is my first React "big" project. This poject is web app for ordering food. <br>
+This is my first major React project, which entails developing a web application for food ordering purposes. <br>
 
 ## Technologies
 
@@ -9,9 +9,7 @@ https://senbonzakura-food.web.app/home
 
 ## Note
 
-I started this project few days before ZenDev hackaton was annouced so I rushed about some things to make it in time since I was busy with a lot of things. <br>
-I think this project has pretty lean HTML (JSX) and CSS code (Bem methodology) as well as React component managment and JavaScript logic. <br>
-This project includes things which React begginer/junior without job experience should have, such as:
+This project includes things which React begginer without job experience should have, such as:
 - useState, useEffect hooks,
 - props chaining,
 - conditional rendering, 
@@ -27,7 +25,7 @@ This project includes things which React begginer/junior without job experience 
 This poject has cool premium design as well.
 ---
 
-Some features aren't added yet such as searchbar and login. Main reason for saerchbar is because backend data isn't in best shape. For login, I didn't have time to make logic for creating acces token and stuff bound for that.  
+Some features aren't added yet such as searchbar and login. 
 
 ---
 
